@@ -8,13 +8,17 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <Navbar>
                 <template #logo>
                     <Link v-if="$page.props.auth.user.role == 2" :href="route('admin.dashboard')">
-                        <ApplicationLogo
-                            class="block h-9 w-auto fill-current text-gray-800"
-                        />
+                        <img src="/images/denrLogo.png" alt="Logo" class="w-12 h-auto object-cover rounded-full shadow-lg dark:drop-shadow-[0_4px_6px_rgba(144,238,144,0.5)]" />
+                    </Link>
+                    <Link v-if="$page.props.auth.user.role == 1" :href="route('coordinator.dashboard')">
+                        <img src="/images/denrLogo.png" alt="Logo" class="w-12 h-auto object-cover rounded-full shadow-lg dark:drop-shadow-[0_4px_6px_rgba(144,238,144,0.5)]" />
+                    </Link>
+                    <Link v-if="$page.props.auth.user.role == 0" :href="route('officer.dashboard')">
+                        <img src="/images/denrLogo.png" alt="Logo" class="w-12 h-auto object-cover rounded-full shadow-lg dark:drop-shadow-[0_4px_6px_rgba(144,238,144,0.5)]" />
                     </Link>
                 </template>
                 <template #links>
@@ -52,7 +56,7 @@ import { Link } from '@inertiajs/vue3';
 
             <!-- Page Heading -->
             <header
-                class="bg-white shadow"
+                class="bg-white shadow dark:bg-gray-800"
                 v-if="$slots.header"
             >
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">

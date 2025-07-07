@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class User extends Authenticatable
 {
@@ -49,5 +51,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+        // Search Query
+    public function scopeSearch(Builder $query, Request $request)
+    {
+        // Role Filter
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }; 
+
+        // Searchbar
+        return $query->when($request->search, function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query
+                    ->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%');
+                    
+            });
+        });
     }
 }

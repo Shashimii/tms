@@ -9,9 +9,7 @@ const showingNavigationDropdown = ref(false);
 
 
 <template>
-    <nav
-        class="border-b border-gray-100 bg-white"
-    >
+    <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 justify-between">
@@ -37,8 +35,20 @@ const showingNavigationDropdown = ref(false);
                             <span class="inline-flex rounded-md">
                                 <button
                                     type="button"
-                                    class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                    class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-green-500 dark:text-white dark:hover:text-green-200"
                                 >
+                                    <template v-if="$page.props.auth.user.role == 2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                    </template>
+                                    <template v-if="$page.props.auth.user.role == 1">
+                                        
+                                    </template>
+                                    <template v-if="$page.props.auth.user.role == 0">
+                                        
+                                    </template>
+
                                     {{ $page.props.auth.user.name }}
 
                                     <svg
