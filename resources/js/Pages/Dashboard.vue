@@ -199,7 +199,7 @@ watch(
                             <option value="">Filter by role</option>
                             <option value="2">System Admin</option>
                             <option value="1">Task Coordinator</option>
-                            <option value="0">Officer</option>
+                            <option value="0">Action Officer</option>
                         </select>
                     </template>
                     <template #thead>
@@ -227,7 +227,7 @@ watch(
                                     Task Coordinator
                                 </p>
                                 <p v-if="user.role == 0" class="bg-teal-200 text-teal-800 font-semibold px-2 py-1 rounded inline-block">
-                                    Officer
+                                    Action Officer
                                 </p>
                             </td>
                         </tr>
