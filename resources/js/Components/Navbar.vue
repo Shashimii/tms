@@ -146,15 +146,32 @@ const showingNavigationDropdown = ref(false);
 
         <!-- Responsive Settings Options -->
         <div
-            class="border-t border-gray-200 pb-1 pt-4"
+            class="border-t border-gray-100 dark:border-gray-700 pb-1 pt-4"
         >
             <div class="px-4">
                 <div
-                    class="text-base font-medium text-gray-800"
+                    class="text-base font-medium text-gray-800 dark:text-gray-200"
                 >
-                    {{ $page.props.auth.user.name }}
+                    <p v-if="$page.props.auth.user.role == 2" class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-pink-800 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                        </svg>
+                        {{ $page.props.auth.user.name }}
+                    </p>
+                    <p v-if="$page.props.auth.user.role == 1" class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-orange-800 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        {{ $page.props.auth.user.name }}
+                    </p>
+                    <p v-if="$page.props.auth.user.role == 0" class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-teal-800 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                        {{ $page.props.auth.user.name }}
+                    </p>
                 </div>
-                <div class="text-sm font-medium text-gray-500">
+                <div class="text-sm font-medium text-gray-500 dark:text-gray-300 ml-8">
                     {{ $page.props.auth.user.email }}
                 </div>
             </div>

@@ -17,9 +17,9 @@ defineProps({
 
 <template>
     <div class="max-w-7xl mx-auto sm:px-0 rounded-lg">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+        <div class="bg-white dark:bg-gray-900 overflow-hidden shadow rounded-lg">
             <!-- Pagination container -->
-            <div class="px-4 py-4 border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="px-4 py-4 border rounded-lg border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <!-- Info text -->
                 <div class="text-sm text-gray-700 dark:text-gray-300 text-center sm:text-left">
                     Showing

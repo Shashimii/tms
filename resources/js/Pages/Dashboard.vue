@@ -4,8 +4,12 @@ import StatCard from '@/Components/StatCard.vue'
 import ListingTable from '@/Components/ListingTable.vue';
 import MagnifyingGlass from '@/Components/MagnifyingGlass.vue';
 import Pagination from '@/Components/Pagination.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ListingCard from '@/Components/ListingCard.vue';
+import InfoCard from '@/Components/InfoCard.vue';
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { computed, ref, watch } from 'vue';
+import PrimaryBlockButton from '@/Components/PrimaryBlockButton.vue';
 
 const props = defineProps({
     admins: {
@@ -84,7 +88,9 @@ watch(
     }
 )
 
-
+const test = (user) => {
+    console.log(user)
+}
 
 </script>
 
@@ -93,15 +99,11 @@ watch(
 
     <PrimaryLayout>
         <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Dashboard
-            </h2>
+            Dashboard
         </template>
 
         <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 space-y-4">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
                 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <StatCard>
                         <template #icon>
@@ -165,80 +167,153 @@ watch(
                     </StatCard>
                 </div>
                 
-                <ListingTable>
-                    <template #header>
-                        <h1 class="text-xl font-semibold text-gray-900 dark:text-green-500">
-                            Users
-                        </h1>
-                        <p class="mt-2 text-sm text-gray-700 dark:text-green-700">
-                            shows the users of the system and their roles.
-                        </p>
-                    </template>
-                    <template #filter>
-                        <div class="relative text-sm text-gray-800 w-full sm:max-w-xs">
-                            <div
-                                class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500 dark:text-green-100"
-                            >
-                                <MagnifyingGlass />
+                <div class="hidden sm:block">
+                    <ListingTable>
+                        <template #header>
+                            <h1 class="text-xl font-semibold text-gray-900 dark:text-green-500">
+                                Users
+                            </h1>
+                            <p class="mt-2 text-sm text-gray-700 dark:text-green-700">
+                                shows the users of the system and their roles.
+                            </p>
+                        </template>
+                        <template #filter>
+                            <div class="relative text-sm text-gray-800 w-full sm:max-w-xs">
+                                <div
+                                    class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500 dark:text-green-100"
+                                >
+                                    <MagnifyingGlass />
+                                </div>
+
+                                <input
+                                    v-model="search"
+                                    type="text"
+                                    autocomplete="off"
+                                    placeholder="Search username, email..."
+                                    id="search"
+                                    class="w-full block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white dark:placeholder-white sm:text-sm sm:leading-6"
+                                />
                             </div>
 
-                            <input
-                                v-model="search"
-                                type="text"
-                                autocomplete="off"
-                                placeholder="Search username, email..."
-                                id="search"
-                                class="w-full block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white dark:placeholder-white sm:text-sm sm:leading-6"
-                            />
-                        </div>
+                            <select
+                                v-model="role"
+                                class="block rounded-lg border-0 py-2 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white sm:ml-5 sm:text-sm sm:leading-6"
+                            >
+                                <option value="">Filter by role</option>
+                                <option value="2">System Admin</option>
+                                <option value="1">Task Coordinator</option>
+                                <option value="0">Action Officer</option>
+                            </select>
+                        </template>
+                        <template #thead>
+                            <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Username</th>
+                            <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Email</th>
+                            <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white max-w-xs">Role</th>
+                        </template>
+                        <template #tbody>
+                            <tr v-for="user in props.users.data" :key="user.id" class="transition duration-300 hover:bg-gray-100 dark:hover:bg-black">
+                                <td class="px-3 py-4 text-sm text-gray-900">
+                                    <p class="bg-blue-200 text-blue-800 font-semibold px-2 py-1 rounded inline-block">
+                                        {{ user.name }}
+                                    </p>
+                                </td>
+                                <td class="px-3 py-4 text-sm text-gray-900 max-w-xs">
+                                    <p class="bg-emerald-200 text-emerald-800 font-semibold px-2 py-1 rounded inline-block">
+                                        {{ user.email }}
+                                    </p>
+                                </td>
+                                <td class="px-3 py-4 text-sm text-gray-900 max-w-xs">
+                                    <p v-if="user.role == 2" class="bg-pink-200 text-pink-800 font-semibold px-2 py-1 rounded inline-block">
+                                        System Admin
+                                    </p>
+                                    <p v-if="user.role == 1" class="bg-orange-200 text-orange-800 font-semibold px-2 py-1 rounded inline-block">
+                                        Task Coordinator
+                                    </p>
+                                    <p v-if="user.role == 0" class="bg-teal-200 text-teal-800 font-semibold px-2 py-1 rounded inline-block">
+                                        Action Officer
+                                    </p>
+                                </td>
+                            </tr>
+                        </template>
+                        <template #pagination>
+                            <Pagination 
+                                :data="props.users" 
+                                :updatedPageNumber="updatedPageNumber"
+                            /> 
+                        </template>
+                    </ListingTable>
+                </div>
+                <div class="block sm:hidden space-y-4">
+                    <ListingCard>
+                        <template #header>
+                            <h1 class="text-xl font-semibold text-gray-900 dark:text-green-500">
+                                Users
+                            </h1>
+                            <p class="text-sm text-gray-700 dark:text-green-700">
+                                shows the users of the system and their roles.
+                            </p>
+                        </template>
+                        <template #filter>
+                            <div class="relative text-sm text-gray-800 w-full sm:max-w-xs">
+                                <div
+                                    class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500 dark:text-green-100"
+                                >
+                                    <MagnifyingGlass />
+                                </div>
 
-                        <select
-                            v-model="role"
-                            class="block rounded-lg border-0 py-2 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white sm:ml-5 sm:text-sm sm:leading-6"
-                        >
-                            <option value="">Filter by role</option>
-                            <option value="2">System Admin</option>
-                            <option value="1">Task Coordinator</option>
-                            <option value="0">Action Officer</option>
-                        </select>
-                    </template>
-                    <template #thead>
-                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Username</th>
-                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Email</th>
-                        <th class="px-3 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white max-w-xs">Role</th>
-                    </template>
-                    <template #tbody>
-                        <tr v-for="user in props.users.data" :key="user.id" class="transition duration-300 hover:bg-gray-100 dark:hover:bg-black">
-                            <td class="px-3 py-4 text-sm text-gray-900">
-                                <p class="bg-blue-200 text-blue-800 font-semibold px-2 py-1 rounded inline-block">
-                                    {{ user.name }}
-                                </p>
-                            </td>
-                            <td class="px-3 py-4 text-sm text-gray-900 max-w-xs">
-                                <p class="bg-emerald-200 text-emerald-800 font-semibold px-2 py-1 rounded inline-block">
-                                    {{ user.email }}
-                                </p>
-                            </td>
-                            <td class="px-3 py-4 text-sm text-gray-900 max-w-xs">
-                                <p v-if="user.role == 2" class="bg-pink-200 text-pink-800 font-semibold px-2 py-1 rounded inline-block">
-                                    System Admin
-                                </p>
-                                <p v-if="user.role == 1" class="bg-orange-200 text-orange-800 font-semibold px-2 py-1 rounded inline-block">
-                                    Task Coordinator
-                                </p>
-                                <p v-if="user.role == 0" class="bg-teal-200 text-teal-800 font-semibold px-2 py-1 rounded inline-block">
-                                    Action Officer
-                                </p>
-                            </td>
-                        </tr>
-                    </template>
-                    <template #pagination>
-                        <Pagination 
-                            :data="props.users" 
-                            :updatedPageNumber="updatedPageNumber"
-                        /> 
-                    </template>
-                </ListingTable>
+                                <input
+                                    v-model="search"
+                                    type="text"
+                                    autocomplete="off"
+                                    placeholder="Search username, email..."
+                                    id="search"
+                                    class="w-full block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white dark:placeholder-white sm:text-sm sm:leading-6"
+                                />
+                            </div>
+
+                            <select
+                                v-model="role"
+                                class="block rounded-lg border-0 py-2 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 dark:ring-green-500 dark:focus:ring-green-500 dark:bg-green-800 dark:text-white sm:ml-5 sm:text-sm sm:leading-6"
+                            >
+                                <option value="">Filter by role</option>
+                                <option value="2">System Admin</option>
+                                <option value="1">Task Coordinator</option>
+                                <option value="0">Action Officer</option>
+                            </select>
+                        </template>
+                        <template #list>
+                            <InfoCard
+                            v-for="user in users.data"
+                            :key="user.id"
+                            :title="user.name"
+                            :subtitle="user.email"
+                            >
+                                <template #badge>
+                                    <p v-if="user.role == 2" class="bg-pink-200 text-sm text-pink-800 font-semibold px-4 py-1 rounded-full inline-block">
+                                        System Admin
+                                    </p>
+                                    <p v-if="user.role == 1" class="bg-orange-200 text-sm text-orange-800 font-semibold px-4 py-1 rounded-full inline-block">
+                                        Task Coordinator
+                                    </p>
+                                    <p v-if="user.role == 0" class="bg-teal-200 text-sm text-teal-800 font-semibold px-4 py-1 rounded-full inline-block">
+                                        Action Officer
+                                    </p>
+                                </template>
+                                <template #buttons>
+                                    <PrimaryBlockButton @click="test(user)">
+                                        Change Role
+                                    </PrimaryBlockButton>
+                                </template>
+                            </InfoCard>
+                        </template>
+                        <template #pagination>
+                            <Pagination 
+                                :data="props.users" 
+                                :updatedPageNumber="updatedPageNumber"
+                            />
+                        </template>
+                    </ListingCard>
+                </div>
             </div>
         </div>
     </PrimaryLayout>
